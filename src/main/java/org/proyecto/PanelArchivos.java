@@ -52,6 +52,17 @@ public class PanelArchivos extends JFrame {
         ZNarrastre.add(mensaje, BorderLayout.CENTER);
         //boton del panel
         JButton boton = new JButton("Seleccione su archivo");
+        JPanel botonPanel = new JPanel();
+        botonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        botonPanel.setBorder(
+                BorderFactory.createEmptyBorder(0,10,30,10)
+        );
+        botonPanel.setOpaque(false);
+        botonPanel.add(boton);
+        ZNarrastre.add(botonPanel,BorderLayout.SOUTH);
+        boton.addActionListener(e -> {
+            System.out.println("Se presiono el boton");
+        });
 
 
 
