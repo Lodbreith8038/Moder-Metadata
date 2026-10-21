@@ -1,39 +1,32 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-.kotlin
+# Java y Maven
+/target/
+/out/
+/build/
+*.class
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
+# IntelliJ: configuraciones locales
+.idea/
 *.iml
+*.iws
 *.ipr
 
-### Eclipse ###
-.apt_generated
+# Configuracion privada de cada desarrollador
+/config/db.properties
+
+# SQL Server: no subir archivos fisicos ni respaldos
+*.mdf
+*.ndf
+*.ldf
+*.bak
+
+# Otros IDE
 .classpath
-.factorypath
 .project
-.settings
-.springBeans
-.sts4-cache
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+.settings/
+*.eml
+*.userlibraries
 .vscode/
 
-### Mac OS ###
+# Temporales
 .DS_Store
+Thumbs.db
