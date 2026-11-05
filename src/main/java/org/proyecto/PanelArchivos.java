@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -108,7 +111,18 @@ public class PanelArchivos extends JFrame {
     // analiza el archivo y muestra el resultado =====
     private void mostrarMetadata(File archivo) {
         try {
-            Map<String, String> datos = AnalizadorPng.analizar(archivo);
+            // Miramos los primeros bytes para saber qué tipo de archivo es
+            // (no la extensión, porque alguien puede renombrar un .jpg a .png)
+            byte[] cabecera = leerPrimerosBytes(archivo, 8);
+            Map<String, String> datos;
+
+            if (AnalizadorPng.esPng(cabecera)) {
+                datos = AnalizadorPng.analizar(archivo);
+            } else if (AnalizadorJpg.esJpg(cabecera)) {
+                datos = AnalizadorJpg.analizar(archivo);
+            } else {
+                throw new IOException("Formato no soportado (solo PNG y JPG)");
+            }
 
             // Convertimos los datos en texto, una línea por dato
             StringBuilder texto = new StringBuilder();
@@ -124,6 +138,13 @@ public class PanelArchivos extends JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "No se pudo analizar: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Lee los primeros bytes del archivo (la "firma" que indica su formato)
+    private static byte[] leerPrimerosBytes(File archivo, int cantidad) throws IOException {
+        try (InputStream in = new FileInputStream(archivo)) {
+            return in.readNBytes(cantidad);
         }
     }
 }

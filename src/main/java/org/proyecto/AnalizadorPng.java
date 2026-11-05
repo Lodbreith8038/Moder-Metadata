@@ -22,6 +22,11 @@ public class AnalizadorPng {
     // Todo PNG empieza con estos 8 bytes
     private static final byte[] FIRMA_PNG = {(byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n'};
 
+    /** Comprueba si los primeros bytes son la firma de un PNG. */
+    public static boolean esPng(byte[] cabecera) {
+        return cabecera.length >= 8 && Arrays.equals(Arrays.copyOf(cabecera, 8), FIRMA_PNG);
+    }
+
     /** Devuelve la metadata como pares "nombre -> valor", en orden. */
     public static Map<String, String> analizar(File archivo) throws IOException {
         Map<String, String> datos = new LinkedHashMap<>();
