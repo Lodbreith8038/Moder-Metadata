@@ -1,6 +1,6 @@
 # Moder-Metadata
 
-Aplicacion Java Swing para seleccionar o arrastrar imagenes PNG y consultar sus metadatos.
+Aplicacion Java Swing inspirada en ExifTool: analiza una imagen o un lote (archivos o carpetas, con boton o arrastrando), muestra sus metadatos y avisa si hay pistas de que se hizo con IA.
 
 ## Requisitos
 
@@ -10,7 +10,19 @@ Aplicacion Java Swing para seleccionar o arrastrar imagenes PNG y consultar sus 
 
 ## Ejecutar la interfaz
 
-Abre el proyecto como proyecto Maven desde IntelliJ y ejecuta `org.proyecto.Main`. El lector de PNG no requiere SQL Server.
+Abre el proyecto como proyecto Maven desde IntelliJ y ejecuta `org.proyecto.Main`. El analisis no requiere SQL Server.
+
+## Como esta organizado el codigo
+
+| Paquete | Que hace |
+| --- | --- |
+| `org.proyecto.analisis` | `RegistroAnalizadores` mira la firma del archivo y elige el lector (`AnalizadorPng`, `AnalizadorJpg`). `LectorExif`, `LectorXmp` y `LectorC2pa` leen los bloques que comparten ambos formatos. |
+| `org.proyecto.ia` | `DetectorIA` busca pistas de IA en los metadatos: marca IPTC `DigitalSourceType`, prompts de Stable Diffusion / ComfyUI / InvokeAI / NovelAI y nombres de generadores (Midjourney, DALL-E, Firefly...). |
+| `org.proyecto.ui` | `VentanaLote`: lista del lote a la izquierda, veredicto y tabla de metadatos a la derecha. Doble clic en una fila muestra el valor completo. |
+
+Para soportar un formato nuevo: crea una clase que implemente `Analizador` y registrala en el constructor de `RegistroAnalizadores`. La ventana no hay que tocarla.
+
+Si no hay pistas de IA no significa que la imagen sea real: los metadatos se pueden borrar.
 
 ## Base de datos de prueba
 
@@ -29,7 +41,7 @@ db.url=jdbc:sqlserver://localhost:1433;databaseName=DB_Image;integratedSecurity=
 
 Para una instancia con nombre, el puerto puede ser distinto. La autenticacion integrada de Windows puede necesitar la biblioteca de autenticacion nativa de Microsoft JDBC y permisos en SQL Server. Si utilizas autenticacion SQL en vez de Windows, ajusta el codigo para leer las credenciales de forma local.
 
-**Estado:** `ConexionSQL` solo prueba la conexion; `PanelArchivos` todavia no inserta los metadatos en la base. El script SQL crea estructura, no almacena los archivos PNG.
+**Estado:** `ConexionSQL` solo prueba la conexion; la ventana todavia no guarda el historial en la base. El script SQL crea estructura, no almacena los archivos PNG.
 
 ## Archivos que no se comparten
 

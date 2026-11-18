@@ -30,3 +30,7 @@
 # Temporales
 .DS_Store
 Thumbs.db
+
+# ExifTool descargado localmente (solo referencia, no se sube)
+exiftool-*/
+exiftool-*.zip
