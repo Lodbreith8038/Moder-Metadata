@@ -1,3 +1,11 @@
-# Copia a config/db.properties (ese archivo se ignora por Git).
-# Cada integrante usa su propia instancia o puerto de SQL Server.
-db.url=jdbc:sqlserver://localhost:1433;databaseName=DB_Image;integratedSecurity=true;encrypt=true;trustServerCertificate=true;
+# Copia este archivo a config/db.properties (ese archivo lo ignora Git) y complétalo.
+# NUNCA pongas la contraseña real en este .example: este sí se sube al repositorio.
+
+# --- Base compartida en MonsterASP (datos en el panel: Databases > Remote access) ---
+db.url=jdbc:sqlserver://SERVIDOR.public.databaseasp.net:1433;databaseName=NOMBRE_BASE;encrypt=true;trustServerCertificate=true;loginTimeout=10;
+db.usuario=LOGIN
+db.contrasena=
+
+# --- Alternativa: SQL Server local con tu usuario de Windows (deja db.usuario vacío) ---
+# db.url=jdbc:sqlserver://localhost:1433;databaseName=DB_Image;integratedSecurity=true;encrypt=true;trustServerCertificate=true;
+# db.usuario=

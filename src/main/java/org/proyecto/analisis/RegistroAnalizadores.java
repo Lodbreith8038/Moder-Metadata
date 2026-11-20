@@ -32,6 +32,7 @@ public class RegistroAnalizadores {
     public RegistroAnalizadores() {
         registrar(new AnalizadorPng());
         registrar(new AnalizadorJpg());
+        registrar(new AnalizadorDOC());
     }
 
     /** Añade un formato nuevo al programa. */
